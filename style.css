@@ -2,12 +2,20 @@
 img{
     max-width:200px;
     display:inline-block;
-    margin: 0 auto;
+    text-align: center;
+    text-decoration: none;
+    margin: 40px;
+    border:5px solid aqua;
+}
+
+ul{
+    text-decoration:none;
 }
 
 #image_container li{
     display:inline-block;
     margin: 0 auto;
+    text-decoration: none;
 }
 
 h1{

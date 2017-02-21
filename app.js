@@ -30,38 +30,40 @@ var wine_glass = new Picture ('wine_glass', 'images/wine_glass.jpg');
 
 console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
 
-var imageArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.jpg', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine_glass.jpg'];
-var idArray = ['first','second','third'];
+var imageArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.jpg', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
 
+//this generates random image
+var newImage;
 var min = 0;
 var max = imageArray.length;
 function randomImage(){
   for(var i = 0; i < imageArray.length; i++)
     var randomNum = Math.floor((Math.random(max - min) + min) * imageArray.length);
   console.log (randomNum);
-  var newImage = imageArray[randomNum];
-  console.log(newImage);
+  newImage = imageArray[randomNum];
+  return newImage;
 };
 
-randomImage();
-
-console.log(randomImage);
-
-// var showPictures = function(){
-//   var firstPicture = getElementById ('first');
-//   var DOM_img = document.createElement(img);
-//   DOM_img.src = 'images/wine_glass.jpg';
-//   firstPicture.appendChild(DOM_img);
-// };
-
-
+//This puts 3 random images on the screen.
 var showPictures = function(){
-  // var newImage = [];
+  var pictureIdArray = ['first','second','third'];
   var ul = document.getElementById ('picture_set');
-  var firstPicture = document.createElement('img');
-  firstPicture.src = 'images/wine_glass.jpg'; //testing out a direct path to see if image appears on screen
-  ul.appendChild(firstPicture);
+  for (var i = 0; i < pictureIdArray.length; i++){
+    var threePictures = document.createElement('img');
+    threePictures.setAttribute ('src',randomImage()); //You can also use:  threePictures.src = randomImage(); 
+    ul.appendChild(threePictures);
+  }
 };
-
 showPictures();
 
+var clickArea = document.getElementById('click_area');
+clickArea.addEventListener('click', clickHandler);
+function clickHandler(event){
+  event.preventDefault();
+  alert(event.target.src)
+
+  
+//log the click in an array && run Show pictures function.
+  
+
+}
