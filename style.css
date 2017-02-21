@@ -1,8 +1,23 @@
+
 img{
     max-width:200px;
     display:inline-block;
-}
-#image_container li{
-    display:inline-block;s
     margin: 0 auto;
+}
+
+#image_container li{
+    display:inline-block;
+    margin: 0 auto;
+}
+
+h1{
+font-family: Helvetica;
+font-weight: bold;
+text-align: center;
+}
+
+h2{
+font-family: Helvetica;
+font-weight: lighter;
+text-align: center;
 }

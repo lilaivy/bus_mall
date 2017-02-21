@@ -59,7 +59,7 @@ var showPictures = function(){
   // var newImage = [];
   var ul = document.getElementById ('picture_set');
   var firstPicture = document.createElement('img');
-  firstPicture.src = 'images/wine_glass.jpg';
+  firstPicture.src = 'images/wine_glass.jpg'; //testing out a direct path to see if image appears on screen
   ul.appendChild(firstPicture);
 };
 
