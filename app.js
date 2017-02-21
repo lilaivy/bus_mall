@@ -1,8 +1,5 @@
 'use strict';
 
-
-
-
 var Picture = function (name,filePath){
   this.name = name;
   this.filePath = filePath;
@@ -31,9 +28,9 @@ var usb = new Picture ('usb', 'images/usb.gif');
 var water_can = new Picture ('water_can', 'images/water-can.jpg');
 var wine_glass = new Picture ('wine_glass', 'images/wine_glass.jpg');
 
-console.log (bubblegum);
+console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
 
-var imageArray = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dog_duck, dragon, pen, pet_sweep, scissors, shark, sweep, tauntaun, unicorn, usb, water_can, wine_glass];
+var imageArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.jpg', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine_glass.jpg'];
 var idArray = ['first','second','third'];
 
 var min = 0;
@@ -44,10 +41,27 @@ function randomImage(){
   console.log (randomNum);
   var newImage = imageArray[randomNum];
   console.log(newImage);
-  var imagePath = newImage.filepath;
-
 };
 
 randomImage();
 
-console.log(imagePath);
+console.log(randomImage);
+
+// var showPictures = function(){
+//   var firstPicture = getElementById ('first');
+//   var DOM_img = document.createElement(img);
+//   DOM_img.src = 'images/wine_glass.jpg';
+//   firstPicture.appendChild(DOM_img);
+// };
+
+
+var showPictures = function(){
+  // var newImage = [];
+  var ul = document.getElementById ('picture_set');
+  var firstPicture = document.createElement('img');
+  firstPicture.src = 'images/wine_glass.jpg';
+  ul.appendChild(firstPicture);
+};
+
+showPictures();
+
