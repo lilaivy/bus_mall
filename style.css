@@ -1,6 +1,8 @@
 img{
     max-width:200px;
-}
-#image_container{
     display:inline-block;
+}
+#image_container li{
+    display:inline-block;s
+    margin: 0 auto;
 }
