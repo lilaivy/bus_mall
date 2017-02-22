@@ -1,21 +1,29 @@
 
 img{
-    max-width:200px;
+    max-width:400px;
     display:inline-block;
     text-align: center;
     text-decoration: none;
-    margin: 40px;
     border:5px solid aqua;
+}
+
+#click_area{
+    text-align: center;
+    margin: 0 auto;
+    display: inline-block;
 }
 
 ul{
     text-decoration:none;
+    display: inline-block;
+    text-align: center;
 }
 
 #click_area li{
     display:inline-block;
-    margin: 0 auto;
+  text-align: center;
     text-decoration: none;
+     margin: 40px auto;
 }
 
 h1{

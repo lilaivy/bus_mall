@@ -67,6 +67,9 @@ function clickHandler(event){
     if(clicked === nameArray[i].filePath){
       nameArray[i].timesClicked ++;
       console.log('testing',nameArray[i]);
+      if (clicked){
+        showPictures();
+      };
 
     }
   }
