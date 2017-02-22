@@ -50,10 +50,18 @@ function randomImage(){
 var showPictures = function(){
   var pictureIdArray = ['first','second','third'];
   for (var i = 0; i < pictureIdArray.length; i++){
+    var imageShown = randomImage();
     var imageTag = document.getElementById (pictureIdArray[i]);
-    imageTag.setAttribute ('src',randomImage()); //You can also use:  threePictures.src = randomImage(); 
-   
+    imageTag.setAttribute ('src',imageShown); //You can also use:  threePictures.src = randomImage();
+    console.log('testing', nameArray[i].filePath, imageShown, imageShown === nameArray[i].filepath);
   }
+  for (var j = 0; j < pathArray.length; j++){
+    if (imageShown === nameArray[j].filePath){
+      nameArray[j].timesShown++;
+      // console.log('testing',nameArray[i]);
+    }
+  }
+
 };
 showPictures();
 
@@ -62,20 +70,28 @@ showPictures();
 //this sets the EventListener and clickHandler to start storing clicks
 var clickArea = document.getElementById('click_area');
 clickArea.addEventListener('click', clickHandler);
+var totalClicks = 0;
+
 function clickHandler(event){
   event.preventDefault();
+  totalClicks++;
+  console.log('testing', totalClicks);
   var clicked = event.target.getAttribute('src');
   for (var i = 0; i < pathArray.length; i++){
     if(clicked === nameArray[i].filePath){
       nameArray[i].timesClicked ++;
       console.log('testing',nameArray[i]);
-      if (clicked){
-        showPictures();
-      };
-    }
-
+      if (totalClicks < 25){
+        showPictures(); //the generates a new image set when one image is clicked
+      }
+      else{
+        return;
+        console.log('Display Results Chart'); //insert Chart data here.
+      }
+    };
   }
 }
+
 //log the click in an array && run Show pictures function.
 
 
