@@ -61,7 +61,6 @@ var showPictures = function(){
       }
     }
   }
-
 };
 showPictures();
 
@@ -82,17 +81,43 @@ function clickHandler(event){
     if(clicked === nameArray[i].filePath){
       nameArray[i].timesClicked ++;
       console.log('testing',nameArray[i]);
-      // showPictures();
-      // else{
-      //   return;
-      //   console.log('Display Results Chart'); //insert Chart data here.
-      // }
     };
   }
   showPictures(); //the generates a new image set when one image is clicked
 }
 
-
-//log the click in an array && run Show pictures function.
-
-
+var ctx = document.getElementById('myChart');
+var myChartConfig = {
+  type:'bar',
+  data:{
+    labels:['boots', 'bubblegum', 'chair', 'pet_sweep'],
+    datasets:[{
+      label:'Market Research Clicks Chart',
+      data:[5,2,6,9],
+      backgroundColor:[
+        'rgba(255, 99, 132,0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(75,192,192,0.2)',
+        'rgba(153,102,255,0.2)'
+      ],
+      borderColor:[
+        'rgba(255, 99, 132,1)',
+        'rgba(54, 162, 235,1)',
+        'rgba(75,192,192, 1)',
+        'rgba(153,102,255,1)'
+      ],
+      borderWidth: 5
+    }]
+  },
+  options:{
+    scales:{
+      yAxis:[{
+        ticks:{
+          beginAtZero:true
+        }
+      }]
+    }
+  }
+};
+var renderedChart = new Chart(ctx, myChartConfig);
+console.log(renderedChart, 'this works');
