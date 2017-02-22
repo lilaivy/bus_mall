@@ -57,6 +57,8 @@ var showPictures = function(){
 };
 showPictures();
 
+
+
 //this sets the EventListener and clickHandler to start storing clicks
 var clickArea = document.getElementById('click_area');
 clickArea.addEventListener('click', clickHandler);
@@ -71,9 +73,9 @@ function clickHandler(event){
         showPictures();
       };
     }
-    }
+
   }
+}
 //log the click in an array && run Show pictures function.
 
 
-}
