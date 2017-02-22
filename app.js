@@ -70,6 +70,7 @@ function clickHandler(event){
       if (clicked){
         showPictures();
       };
+    }
 
     }
   }
