@@ -6,7 +6,6 @@ var Picture = function (name,filePath){
   this.timesShown = 0;
   this.timesClicked = 0;
 };
-
 var bag = new Picture ('bag', 'images/bag.jpg');
 var banana = new Picture ('banana','images/banana.jpg');
 var bathroom = new Picture ('bathroom', 'images/bathroom.jpg');
@@ -21,49 +20,104 @@ var pen = new Picture ('pen', 'images/pen.jpg');
 var pet_sweep = new Picture ('pet_sweep', 'images/pet-sweep.jpg');
 var scissors = new Picture ('scissors', 'images/scissors.jpg');
 var shark = new Picture ('shark', 'images/shark.jpg');
-var sweep = new Picture ('sweep', 'images/sweep.jpg');
+var sweep = new Picture ('sweep', 'images/sweep.png');
 var tauntaun = new Picture ('tauntaun', 'images/tauntaun.jpg');
 var unicorn = new Picture ('unicorn', 'images/unicorn.jpg');
 var usb = new Picture ('usb', 'images/usb.gif');
 var water_can = new Picture ('water_can', 'images/water-can.jpg');
-var wine_glass = new Picture ('wine_glass', 'images/wine_glass.jpg');
+var wine_glass = new Picture ('wine_glass', 'images/wine-glass.jpg');
 
 console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
 
-var imageArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.jpg', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
+var pathArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.png', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
+
+var nameArray = [bag, banana,bathroom,boots,breakfast,bubblegum,chair,cthulhu,dog_duck,dragon,pen,pet_sweep,scissors,shark,sweep,tauntaun,unicorn,usb,water_can,wine_glass];
+
 
 //this generates random image
 var newImage;
 var min = 0;
-var max = imageArray.length;
+var max = pathArray.length;
 function randomImage(){
-  for(var i = 0; i < imageArray.length; i++)
-    var randomNum = Math.floor((Math.random(max - min) + min) * imageArray.length);
+  for(var i = 0; i < pathArray.length; i++)
+    var randomNum = Math.floor((Math.random(max - min) + min) * pathArray.length);
   console.log (randomNum);
-  newImage = imageArray[randomNum];
+  newImage = pathArray[randomNum];
   return newImage;
 };
 
 //This puts 3 random images on the screen.
 var showPictures = function(){
   var pictureIdArray = ['first','second','third'];
-  var ul = document.getElementById ('picture_set');
   for (var i = 0; i < pictureIdArray.length; i++){
-    var threePictures = document.createElement('img');
-    threePictures.setAttribute ('src',randomImage()); //You can also use:  threePictures.src = randomImage(); 
-    ul.appendChild(threePictures);
+    var imageShown = randomImage();
+    var imageTag = document.getElementById (pictureIdArray[i]);
+    imageTag.setAttribute ('src',imageShown); //You can also use:  threePictures.src = randomImage();
+    // console.log('testing', nameArray[i].filePath, imageShown, imageShown === nameArray[i].filepath);
+    for (var j = 0; j < pathArray.length; j++){
+      if (imageShown === nameArray[j].filePath){
+        nameArray[j].timesShown++;
+      // console.log('testing',nameArray[i]);
+      }
+    }
   }
 };
 showPictures();
 
+
+
+//this sets the EventListener and clickHandler to start storing clicks
 var clickArea = document.getElementById('click_area');
 clickArea.addEventListener('click', clickHandler);
+var totalClicks = 0;
+
 function clickHandler(event){
   event.preventDefault();
-  alert(event.target.src)
-
-  
-//log the click in an array && run Show pictures function.
-  
-
+  totalClicks++;
+  if (totalClicks > 25) return;
+  // console.log('testing', totalClicks);
+  var clicked = event.target.getAttribute('src');
+  for (var i = 0; i < pathArray.length; i++){
+    if(clicked === nameArray[i].filePath){
+      nameArray[i].timesClicked ++;
+      console.log('testing',nameArray[i]);
+    };
+  }
+  showPictures(); //the generates a new image set when one image is clicked
 }
+
+var ctx = document.getElementById('myChart');
+var myChartConfig = {
+  type:'bar',
+  data:{
+    labels:['boots', 'bubblegum', 'chair', 'pet_sweep'],
+    datasets:[{
+      label:'Market Research Clicks Chart',
+      data:[5,2,6,9],
+      backgroundColor:[
+        'rgba(255, 99, 132,0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(75,192,192,0.2)',
+        'rgba(153,102,255,0.2)'
+      ],
+      borderColor:[
+        'rgba(255, 99, 132,1)',
+        'rgba(54, 162, 235,1)',
+        'rgba(75,192,192, 1)',
+        'rgba(153,102,255,1)'
+      ],
+      borderWidth: 5
+    }]
+  },
+  options:{
+    scales:{
+      yAxis:[{
+        ticks:{
+          beginAtZero:true
+        }
+      }]
+    }
+  }
+};
+var renderedChart = new Chart(ctx, myChartConfig);
+console.log(renderedChart, 'this works');
