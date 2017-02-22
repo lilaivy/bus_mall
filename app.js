@@ -71,7 +71,6 @@ function clickHandler(event){
         showPictures();
       };
     }
-
     }
   }
 //log the click in an array && run Show pictures function.
