@@ -53,12 +53,12 @@ var showPictures = function(){
     var imageShown = randomImage();
     var imageTag = document.getElementById (pictureIdArray[i]);
     imageTag.setAttribute ('src',imageShown); //You can also use:  threePictures.src = randomImage();
-    console.log('testing', nameArray[i].filePath, imageShown, imageShown === nameArray[i].filepath);
-  }
-  for (var j = 0; j < pathArray.length; j++){
-    if (imageShown === nameArray[j].filePath){
-      nameArray[j].timesShown++;
+    // console.log('testing', nameArray[i].filePath, imageShown, imageShown === nameArray[i].filepath);
+    for (var j = 0; j < pathArray.length; j++){
+      if (imageShown === nameArray[j].filePath){
+        nameArray[j].timesShown++;
       // console.log('testing',nameArray[i]);
+      }
     }
   }
 
@@ -75,22 +75,23 @@ var totalClicks = 0;
 function clickHandler(event){
   event.preventDefault();
   totalClicks++;
-  console.log('testing', totalClicks);
+  if (totalClicks > 25) return;
+  // console.log('testing', totalClicks);
   var clicked = event.target.getAttribute('src');
   for (var i = 0; i < pathArray.length; i++){
     if(clicked === nameArray[i].filePath){
       nameArray[i].timesClicked ++;
       console.log('testing',nameArray[i]);
-      if (totalClicks < 25){
-        showPictures(); //the generates a new image set when one image is clicked
-      }
-      else{
-        return;
-        console.log('Display Results Chart'); //insert Chart data here.
-      }
+      // showPictures();
+      // else{
+      //   return;
+      //   console.log('Display Results Chart'); //insert Chart data here.
+      // }
     };
   }
+  showPictures(); //the generates a new image set when one image is clicked
 }
+
 
 //log the click in an array && run Show pictures function.
 
