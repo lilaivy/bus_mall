@@ -1,16 +1,9 @@
 'use strict';
-
-if(nameArray['']){
-  var changeBack = localStorage.getItem('nameArray');
-  var loadStorage = JSON.parse(changeBack);
-}
-else{
-  var Picture = function (name,filePath){
-    this.name = name;
-    this.filePath = filePath;
-    this.timesShown = 0;
-    this.timesClicked = 0;
-  };
+var nameArray = [];
+var changeBack = localStorage.getItem('nameArray');
+if(changeBack){
+  nameArray = JSON.parse(changeBack);
+} else {
   var bag = new Picture ('bag', 'images/bag.jpg');
   var banana = new Picture ('banana','images/banana.jpg');
   var bathroom = new Picture ('bathroom', 'images/bathroom.jpg');
@@ -32,105 +25,127 @@ else{
   var water_can = new Picture ('water_can', 'images/water-can.jpg');
   var wine_glass = new Picture ('wine_glass', 'images/wine-glass.jpg');
 
+  nameArray = [bag, banana,bathroom,boots,breakfast,bubblegum,chair,cthulhu,dog_duck,dragon,pen,pet_sweep,scissors,shark,sweep,tauntaun,unicorn,usb,water_can,wine_glass];
+
+};
+
+var Picture = function (name,filePath){
+  this.name = name;
+  this.filePath = filePath;
+  this.timesShown = 0;
+  this.timesClicked = 0;
+};
+
+
 // console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
 
-  var pathArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.png', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
+var pathArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.png', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
 
-  var nameArray = [bag, banana,bathroom,boots,breakfast,bubblegum,chair,cthulhu,dog_duck,dragon,pen,pet_sweep,scissors,shark,sweep,tauntaun,unicorn,usb,water_can,wine_glass];
 
 
 //this generates random image
-  var newImage;
-  var min = 0;
-  var max = pathArray.length;
-  function randomImage(){
-    for(var i = 0; i < pathArray.length; i++)
-      var randomNum = Math.floor((Math.random(max - min) + min) * pathArray.length);
+var newImage;
+var min = 0;
+var max = pathArray.length;
+function randomImage(){
+  for(var i = 0; i < pathArray.length; i++)
+    var randomNum = Math.floor((Math.random(max - min) + min) * pathArray.length);
   // console.log (randomNum);
-    newImage = pathArray[randomNum];
-    return newImage;
-  };
+  newImage = pathArray[randomNum];
+  return newImage;
+};
 
 //This puts 3 random images on the screen.
-  var showPictures = function(){
-    var pictureIdArray = ['first','second','third'];
-    for (var i = 0; i < pictureIdArray.length; i++){
-      var imageShown = randomImage();
-      var imageTag = document.getElementById (pictureIdArray[i]);
-      imageTag.setAttribute ('src',imageShown); //You can also use:  threePictures.src = randomImage();
+var showPictures = function(){
+  var pictureIdArray = ['first','second','third'];
+  for (var i = 0; i < pictureIdArray.length; i++){
+    var imageShown = randomImage();
+    var imageTag = document.getElementById (pictureIdArray[i]);
+    imageTag.setAttribute ('src',imageShown); //You can also use:  threePictures.src = randomImage();
     // console.log('testing', nameArray[i].filePath, imageShown, imageShown === nameArray[i].filepath);
-      for (var j = 0; j < pathArray.length; j++){
-        if (imageShown === nameArray[j].filePath){
-          nameArray[j].timesShown++;
+    for (var j = 0; j < pathArray.length; j++){
+      if (imageShown === nameArray[j].filePath){
+        nameArray[j].timesShown++;
       // console.log('testing',nameArray[i]);
-        }
       }
     }
-  };
-  showPictures();
+  }
+};
+showPictures();
+
+
 
 
 
 //this sets the EventListener and clickHandler to start storing clicks
-  var clickArea = document.getElementById('click_area');
-  clickArea.addEventListener('click', clickHandler);
-  var totalClicks = 0;
+var clickArea = document.getElementById('click_area');
+clickArea.addEventListener('click', clickHandler);
+var totalClicks = 0;
 
-  function clickHandler(event){
-    event.preventDefault();
-    totalClicks++;
-    if (totalClicks > 25){
-      var picturesObject = JSON.stringify(nameArray);
-      localStorage.setItem('nameArray', picturesObject);
-      return;
-    }
-  // console.log('testing', totalClicks);
-    var clicked = event.target.getAttribute('src');
-    for (var i = 0; i < pathArray.length; i++){
-      if(clicked === nameArray[i].filePath){
-        nameArray[i].timesClicked ++;
-      // console.log('testing',nameArray[i]);
-      };
-    }
-    showPictures(); //the generates a new image set when one image is clicked
+function clickHandler(event){
+  event.preventDefault();
+  totalClicks++;
+  if (totalClicks > 25){
+    var objectString = JSON.stringify(nameArray);
+    localStorage.setItem('nameArray', objectString);
+    resultsChart();
+    return;
   }
+  // console.log('testing', totalClicks);
+
+  //This calculates how many times each image is clicked.
 
 
-  var resultsChart = function(){
-    var ctx = document.getElementById('myChart');
-    var myChartConfig = {
-      type:'bar',
-      data:{
-        labels:['boots', 'bubblegum', 'chair', 'pet_sweep'],
-        datasets:[{
-          label:'Market Research Clicks Chart',
-          data:[5,2,6,9],
-          backgroundColor:[
-            'rgba(255, 99, 132,0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(75,192,192,0.2)',
-            'rgba(153,102,255,0.2)'
-          ],
-          borderColor:[
-            'rgba(255, 99, 132,1)',
-            'rgba(54, 162, 235,1)',
-            'rgba(75,192,192, 1)',
-            'rgba(153,102,255,1)'
-          ],
-          borderWidth: 5
-        }]
-      },
-      options:{
-        scales:{
-          yAxis:[{
-            ticks:{
-              beginAtZero:true
-            }
-          }]
-        }
-      }
+  var clicked = event.target.getAttribute('src');
+  for (var i = 0; i < pathArray.length; i++){
+    if(clicked === nameArray[i].filePath){
+      nameArray[i].timesClicked ++;
+      // console.log('testing',nameArray[i]);
     };
-    var renderedChart = new Chart(ctx, myChartConfig);
-    console.log(renderedChart, 'this works');
+  }
+  showPictures(); //the generates a new image set when one image is clicked
+}
+
+
+var resultsChart = function(){
+  var ctx = document.getElementById('myChart');
+  var myChartConfig = {
+    type:'bar',
+    data:{
+      labels:['bag', 'banana,bathroom','boots','breakfast','bubblegum','chair','cthulhu','dog_duck','dragon','pen','pet_sweep','scissors','shark','sweep','tauntaun','unicorn','usb','water_can','wine_glass'],
+      datasets:[{
+        label:'Market Research Clicks Chart',
+        data: [2,6,8,1],
+        backgroundColor:[
+          'rgba(255, 99, 132,0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(75,192,192,0.2)',
+          'rgba(153,102,255,0.2)'
+        ],
+        borderColor:[
+          'rgba(255, 99, 132,1)',
+          'rgba(54, 162, 235,1)',
+          'rgba(75,192,192, 1)',
+          'rgba(153,102,255,1)'
+        ],
+        borderWidth: 5
+      }]
+    },
+    options:{
+      scales:{
+        yAxis:[{
+          ticks:{
+            beginAtZero:true
+          }
+        }]
+      }
+    }
   };
+  var renderedChart = new Chart(ctx, myChartConfig);
+  console.log(renderedChart, 'this works');
 };
+
+    // imageSetArray = array.from(renderedImage);
+    // for(i = 0; i < imageSetArray; i++){
+    //   if(imageSetArray === newImage){
+    //     randomImage();
