@@ -1,4 +1,8 @@
 'use strict';
+var picturesStored = localStorage.getItem('nameArray');
+  var changeBack = JSON.parse(picturesStored);
+ 
+
 
 var Picture = function (name,filePath){
   this.name = name;
@@ -27,7 +31,7 @@ var usb = new Picture ('usb', 'images/usb.gif');
 var water_can = new Picture ('water_can', 'images/water-can.jpg');
 var wine_glass = new Picture ('wine_glass', 'images/wine-glass.jpg');
 
-console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
+// console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
 
 var pathArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.png', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
 
@@ -41,7 +45,7 @@ var max = pathArray.length;
 function randomImage(){
   for(var i = 0; i < pathArray.length; i++)
     var randomNum = Math.floor((Math.random(max - min) + min) * pathArray.length);
-  console.log (randomNum);
+  // console.log (randomNum);
   newImage = pathArray[randomNum];
   return newImage;
 };
@@ -64,7 +68,11 @@ var showPictures = function(){
 };
 showPictures();
 
-
+var persist = function(){
+  var picturesObject = JSON.stringify(nameArray);
+  localStorage.setItem('nameArray', picturesObject);
+};
+persist();
 
 //this sets the EventListener and clickHandler to start storing clicks
 var clickArea = document.getElementById('click_area');
@@ -80,11 +88,13 @@ function clickHandler(event){
   for (var i = 0; i < pathArray.length; i++){
     if(clicked === nameArray[i].filePath){
       nameArray[i].timesClicked ++;
-      console.log('testing',nameArray[i]);
+      // console.log('testing',nameArray[i]);
     };
   }
   showPictures(); //the generates a new image set when one image is clicked
 }
+
+
 
 var ctx = document.getElementById('myChart');
 var myChartConfig = {
