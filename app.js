@@ -1,5 +1,6 @@
 'use strict';
 var nameArray = [];
+var uniquePictures = [];
 var previousSet = [];
 var Picture = function (name,filePath){
   this.name = name;
@@ -12,8 +13,6 @@ var changeBack = localStorage.getItem('nameArray');
 if(changeBack){
   nameArray = JSON.parse(changeBack);
 } else {
-
-
   var bag = new Picture ('bag', 'images/bag.jpg');
   var banana = new Picture ('banana','images/banana.jpg');
   var bathroom = new Picture ('bathroom', 'images/bathroom.jpg');
@@ -34,46 +33,39 @@ if(changeBack){
   var usb = new Picture ('usb', 'images/usb.gif');
   var water_can = new Picture ('water_can', 'images/water-can.jpg');
   var wine_glass = new Picture ('wine_glass', 'images/wine-glass.jpg');
-  console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
-
-
 
   nameArray = [bag, banana,bathroom,boots,breakfast,bubblegum,chair,cthulhu,dog_duck,dragon,pen,pet_sweep,scissors,shark,sweep,tauntaun,unicorn,usb,water_can,wine_glass];
 };
 
 var pathArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.png', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
 
-//this generates random image
+//this generates one random image
 var newImage;
 var min = 0;
 var max = pathArray.length;
 var randomImage = function (){
   for(var i = 0; i < pathArray.length; i++)
     var randomNum = Math.floor((Math.random(max - min) + min) * pathArray.length);
-  // console.log (randomNum);
   newImage = pathArray[randomNum];
   if (previousSet.indexOf(newImage) === -1) {
     return newImage;
   } else {
-    console.log('oops! it is in the previous set!');
     return randomImage();
   }
 };
 
+//this makes sure that the random image I pick is unique to my hand.
 function isUniqueItem(card, hand) {
-  for (var i = 0; i < hand.length; i++) {
-    console.log(i);
+  for (var i = 0; i < hand.length; i++) {       
     if(card === hand[i]) {
       return false;
     }
   }
-  console.log('made it to here');
-  return true;
+  return true;    //cannot be an else, because you have to go through each item in hand.
 };
 
-var uniquePictures = [];
 
-//This puts 3 unique/random images on the screen and creates array of 3 unique items.
+//This creates array of 3 unique items.
 var showPictures = function(){
   var pictureIdArray = ['first','second','third'];
   uniquePictures = [];
@@ -84,9 +76,7 @@ var showPictures = function(){
     }
   }
 
-  //write function that makes each set of pictures unique to each other.
-  //  previous unique picture set can not equal current unique picture set.
-
+//This puts three random images on the screen and tracks times shown.
   for (var i = 0; i < pictureIdArray.length; i++){
     var imageTag = document.getElementById (pictureIdArray[i]);
     var imageShown = uniquePictures[i];
@@ -116,14 +106,12 @@ function clickHandler(event){
     resultsChart();
     return;
   };
-  // console.log('testing', totalClicks);
 
   //This calculates how many times each image is clicked.
   var clicked = event.target.getAttribute('src');
   for (var i = 0; i < pathArray.length; i++){
     if(clicked === nameArray[i].filePath){
       nameArray[i].timesClicked ++;
-      // console.log('timesClicked',timesClicked);
     };
   }
   showPictures(); //the generates a new image set when one image is clicked

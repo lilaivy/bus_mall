@@ -13,27 +13,24 @@ text-align: center;
 
 img{
     max-width:400px;
-    /*display:inline-block;*/
     text-decoration: none;
     border:5px solid aqua;
 }
 
 #click_area{
-    /*display: inline-block;*/
     text-align: center;
     
 }
 
 ul{
     text-decoration:none;
-    /*display: inline-block;*/
     text-align: center;
 }
 
 #click_area li{
     display:inline-block;
     text-decoration: none;
-    /*text-align: center;*/
+
 }
 
 
