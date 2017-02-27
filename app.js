@@ -1,13 +1,6 @@
 'use strict';
-// var nameArray = [];
+var nameArray = [];
 var previousSet = [];
-// var changeBack = localStorage.getItem('nameArray');
-// if(changeBack){
-//   nameArray = JSON.parse(changeBack);
-// } else {
-
-// };
-
 var Picture = function (name,filePath){
   this.name = name;
   this.filePath = filePath;
@@ -15,45 +8,56 @@ var Picture = function (name,filePath){
   this.timesClicked = 0;
 };
 
-var bag = new Picture ('bag', 'images/bag.jpg');
-var banana = new Picture ('banana','images/banana.jpg');
-var bathroom = new Picture ('bathroom', 'images/bathroom.jpg');
-var boots = new Picture ('boots', 'images/boots.jpg');
-var breakfast = new Picture ('breakfast', 'images/breakfast.jpg');
-var bubblegum = new Picture ('bubblegum', 'images/bubblegum.jpg');
-var chair = new Picture ('chair', 'images/chair.jpg');
-var cthulhu = new Picture ('cthulhu', 'images/cthulhu.jpg');
-var dog_duck = new Picture ('dog_duck', 'images/dog-duck.jpg');
-var dragon = new Picture ('dragon', 'images/dragon.jpg');
-var pen = new Picture ('pen', 'images/pen.jpg');
-var pet_sweep = new Picture ('pet_sweep', 'images/pet-sweep.jpg');
-var scissors = new Picture ('scissors', 'images/scissors.jpg');
-var shark = new Picture ('shark', 'images/shark.jpg');
-var sweep = new Picture ('sweep', 'images/sweep.png');
-var tauntaun = new Picture ('tauntaun', 'images/tauntaun.jpg');
-var unicorn = new Picture ('unicorn', 'images/unicorn.jpg');
-var usb = new Picture ('usb', 'images/usb.gif');
-var water_can = new Picture ('water_can', 'images/water-can.jpg');
-var wine_glass = new Picture ('wine_glass', 'images/wine-glass.jpg');
-console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
+var changeBack = localStorage.getItem('nameArray');
+if(changeBack){
+  nameArray = JSON.parse(changeBack);
+} else {
 
 
+  var bag = new Picture ('bag', 'images/bag.jpg');
+  var banana = new Picture ('banana','images/banana.jpg');
+  var bathroom = new Picture ('bathroom', 'images/bathroom.jpg');
+  var boots = new Picture ('boots', 'images/boots.jpg');
+  var breakfast = new Picture ('breakfast', 'images/breakfast.jpg');
+  var bubblegum = new Picture ('bubblegum', 'images/bubblegum.jpg');
+  var chair = new Picture ('chair', 'images/chair.jpg');
+  var cthulhu = new Picture ('cthulhu', 'images/cthulhu.jpg');
+  var dog_duck = new Picture ('dog_duck', 'images/dog-duck.jpg');
+  var dragon = new Picture ('dragon', 'images/dragon.jpg');
+  var pen = new Picture ('pen', 'images/pen.jpg');
+  var pet_sweep = new Picture ('pet_sweep', 'images/pet-sweep.jpg');
+  var scissors = new Picture ('scissors', 'images/scissors.jpg');
+  var shark = new Picture ('shark', 'images/shark.jpg');
+  var sweep = new Picture ('sweep', 'images/sweep.png');
+  var tauntaun = new Picture ('tauntaun', 'images/tauntaun.jpg');
+  var unicorn = new Picture ('unicorn', 'images/unicorn.jpg');
+  var usb = new Picture ('usb', 'images/usb.gif');
+  var water_can = new Picture ('water_can', 'images/water-can.jpg');
+  var wine_glass = new Picture ('wine_glass', 'images/wine-glass.jpg');
+  console.log (bag, banana,bathroom,boots,breakfast,bubblegum, chair,cthulhu);
+
+
+
+  nameArray = [bag, banana,bathroom,boots,breakfast,bubblegum,chair,cthulhu,dog_duck,dragon,pen,pet_sweep,scissors,shark,sweep,tauntaun,unicorn,usb,water_can,wine_glass];
+};
 
 var pathArray = ['images/bag.jpg', 'images/banana.jpg', 'images/bathroom.jpg', 'images/boots.jpg', 'images/breakfast.jpg', 'images/bubblegum.jpg', 'images/chair.jpg', 'images/cthulhu.jpg', 'images/dog-duck.jpg', 'images/dragon.jpg', 'images/pen.jpg', 'images/pet-sweep.jpg', 'images/scissors.jpg', 'images/shark.jpg', 'images/sweep.png', 'images/tauntaun.jpg', 'images/unicorn.jpg', 'images/usb.gif', 'images/water-can.jpg', 'images/wine-glass.jpg'];
-
-var nameArray = [bag, banana,bathroom,boots,breakfast,bubblegum,chair,cthulhu,dog_duck,dragon,pen,pet_sweep,scissors,shark,sweep,tauntaun,unicorn,usb,water_can,wine_glass];
-
 
 //this generates random image
 var newImage;
 var min = 0;
 var max = pathArray.length;
-function randomImage(){
+var randomImage = function (){
   for(var i = 0; i < pathArray.length; i++)
     var randomNum = Math.floor((Math.random(max - min) + min) * pathArray.length);
   // console.log (randomNum);
   newImage = pathArray[randomNum];
-  return newImage;
+  if (previousSet.indexOf(newImage) === -1) {
+    return newImage;
+  } else {
+    console.log('oops! it is in the previous set!');
+    return randomImage();
+  }
 };
 
 function isUniqueItem(card, hand) {
@@ -63,16 +67,16 @@ function isUniqueItem(card, hand) {
       return false;
     }
   }
-  console.log('made it here');
+  console.log('made it to here');
   return true;
 };
 
-
+var uniquePictures = [];
 
 //This puts 3 unique/random images on the screen and creates array of 3 unique items.
 var showPictures = function(){
   var pictureIdArray = ['first','second','third'];
-  var uniquePictures = [];
+  uniquePictures = [];
   while(uniquePictures.length != 3) {
     var imageInHand = randomImage();
     if(isUniqueItem(imageInHand, uniquePictures)){
@@ -81,7 +85,7 @@ var showPictures = function(){
   }
 
   //write function that makes each set of pictures unique to each other.
-  var uniquePictureSet;
+  //  previous unique picture set can not equal current unique picture set.
 
   for (var i = 0; i < pictureIdArray.length; i++){
     var imageTag = document.getElementById (pictureIdArray[i]);
@@ -104,9 +108,11 @@ var totalClicks = 0;
 function clickHandler(event){
   event.preventDefault();
   totalClicks++;
+  previousSet = uniquePictures;
+
   if (totalClicks > 25){
-    // var objectString = JSON.stringify(nameArray);
-    // localStorage.setItem('nameArray', objectString);
+    var objectString = JSON.stringify(nameArray);
+    localStorage.setItem('nameArray', objectString);
     resultsChart();
     return;
   };
